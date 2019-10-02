@@ -14,6 +14,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 public class HelloServer {
 
 	public static void main(String[] args) throws Exception {
+		System.out.println("访问 http://localhost:8080/");
 
 		// 定义一对线程组
 		// 主线程组, 用于接受客户端的连接，但是不做任何处理，跟老板一样，不做事
@@ -28,11 +29,12 @@ public class HelloServer {
 							.channel(NioServerSocketChannel.class)	// 设置nio的双向通道
 							.childHandler(new HelloServerInitializer()); // 子处理器，用于处理workerGroup
 			
-			// 启动server，并且设置8088为启动的端口号，同时启动方式为同步
-			ChannelFuture channelFuture = serverBootstrap.bind(8088).sync();
+			// 启动server，并且设置8080为启动的端口号，同时启动方式为同步
+			ChannelFuture channelFuture = serverBootstrap.bind(8080).sync();
 			
 			// 监听关闭的channel，设置位同步方式
 			channelFuture.channel().closeFuture().sync();
+
 		} finally {
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
